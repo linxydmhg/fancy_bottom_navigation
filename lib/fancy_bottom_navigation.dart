@@ -13,9 +13,6 @@ class FancyBottomNavigation extends StatefulWidget {
       this.initialSelection = 0,
       this.circleColor,
       this.circleHeight = 60,
-      this.circleOutline = 10,
-      this.arcHeight = 70,
-      this.arcWidth = 90,
       this.shadowAllowance = 20,
       this.barHeight = 60,
       this.activeIconColor,
@@ -47,9 +44,6 @@ class FancyBottomNavigation extends StatefulWidget {
   final int animDuration;
   final PageController pageController;
   final double circleHeight;
-  final double circleOutline;
-  final double arcHeight;
-  final double arcWidth;
   final double shadowAllowance;
   final double barHeight;
   final double inactiveIconSize;
@@ -173,7 +167,10 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
                 blurRadius: widget.shadowBlur,
               ),
             ],
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -201,94 +198,94 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
                 .toList(),
           ),
         ),
-        Positioned.fill(
-          top: -(widget.circleHeight +
-                  widget.circleOutline +
-                  widget.shadowAllowance) /
-              2,
-          child: Container(
-            child: AnimatedAlign(
-              duration: Duration(milliseconds: widget.animDuration),
-              curve: Curves.easeOut,
-              alignment: Alignment(_circleAlignX, 1),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 14),
-                child: FractionallySizedBox(
-                  widthFactor: 1 / widget.tabs.length,
-                  child: GestureDetector(
-                    onTap: widget.tabs[currentSelected].onclick,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: widget.circleHeight +
-                              widget.circleOutline +
-                              widget.shadowAllowance,
-                          width: widget.circleHeight +
-                              widget.circleOutline +
-                              widget.shadowAllowance,
-                          child: ClipRect(
-                              clipper: HalfClipper(),
-                              child: Container(
-                                child: Center(
-                                  child: Container(
-                                      width: widget.circleHeight +
-                                          widget.circleOutline,
-                                      height: widget.circleHeight +
-                                          widget.circleOutline,
-                                      decoration: BoxDecoration(
-                                          //color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: shadowColor,
-                                                blurRadius: 8)
-                                          ])),
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                            height: widget.arcHeight,
-                            width: widget.arcWidth,
-                            child: CustomPaint(
-                              painter: HalfPainter(barBackgroundColor),
-                            )),
-                        SizedBox(
-                          height: widget.circleHeight - 5,
-                          width: widget.circleHeight - 5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: this.gradient,
-                                color: circleColor),
-                            child: Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: AnimatedOpacity(
-                                duration: Duration(
-                                    milliseconds: widget.animDuration ~/ 5),
-                                opacity: _circleIconAlpha,
-                                child: activeIconWidget != null
-                                    ? SizedBox(
-                                        width: activeIconSize,
-                                        height: activeIconSize,
-                                        child: activeIconWidget)
-                                    : Icon(
-                                        activeIcon,
-                                        color: activeIconColor,
-                                        size: activeIconSize,
-                                      ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        )
+//        Positioned.fill(
+//          top: -(widget.circleHeight +
+//                  widget.circleOutline +
+//                  widget.shadowAllowance) /
+//              2,
+//          child: Container(
+//            child: AnimatedAlign(
+//              duration: Duration(milliseconds: widget.animDuration),
+//              curve: Curves.easeOut,
+//              alignment: Alignment(_circleAlignX, 1),
+//              child: Padding(
+//                padding: const EdgeInsets.only(bottom: 14),
+//                child: FractionallySizedBox(
+//                  widthFactor: 1 / widget.tabs.length,
+//                  child: GestureDetector(
+//                    onTap: widget.tabs[currentSelected].onclick,
+//                    child: Stack(
+//                      alignment: Alignment.center,
+//                      children: <Widget>[
+//                        SizedBox(
+//                          height: widget.circleHeight +
+//                              widget.circleOutline +
+//                              widget.shadowAllowance,
+//                          width: widget.circleHeight +
+//                              widget.circleOutline +
+//                              widget.shadowAllowance,
+//                          child: ClipRect(
+//                              clipper: HalfClipper(),
+//                              child: Container(
+//                                child: Center(
+//                                  child: Container(
+//                                      width: widget.circleHeight +
+//                                          widget.circleOutline,
+//                                      height: widget.circleHeight +
+//                                          widget.circleOutline,
+//                                      decoration: BoxDecoration(
+//                                          //color: Colors.white,
+//                                          shape: BoxShape.circle,
+//                                          boxShadow: [
+//                                            BoxShadow(
+//                                                color: shadowColor,
+//                                                blurRadius: 8)
+//                                          ])),
+//                                ),
+//                              )),
+//                        ),
+//                        SizedBox(
+//                            height: widget.arcHeight,
+//                            width: widget.arcWidth,
+//                            child: CustomPaint(
+//                              painter: HalfPainter(barBackgroundColor),
+//                            )),
+//                        SizedBox(
+//                          height: widget.circleHeight - 5,
+//                          width: widget.circleHeight - 5,
+//                          child: Container(
+//                            decoration: BoxDecoration(
+//                                shape: BoxShape.circle,
+//                                gradient: this.gradient,
+//                                color: circleColor),
+//                            child: Padding(
+//                              padding: const EdgeInsets.all(0.0),
+//                              child: AnimatedOpacity(
+//                                duration: Duration(
+//                                    milliseconds: widget.animDuration ~/ 5),
+//                                opacity: _circleIconAlpha,
+//                                child: activeIconWidget != null
+//                                    ? SizedBox(
+//                                        width: activeIconSize,
+//                                        height: activeIconSize,
+//                                        child: activeIconWidget)
+//                                    : Icon(
+//                                        activeIcon,
+//                                        color: activeIconColor,
+//                                        size: activeIconSize,
+//                                      ),
+//                              ),
+//                            ),
+//                          ),
+//                        )
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ),
+//          ),
+//        )
       ],
     );
   }
