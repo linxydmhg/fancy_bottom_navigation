@@ -122,11 +122,12 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
     activeIconSize = widget.activeIconSize;
     inactiveIconSize = widget.inactiveIconSize;
     gradient = widget.gradient;
-    shadowColor = widget.shadowColor != null ? widget.shadowColor 
-      : Theme.of(context).brightness == Brightness.dark
-        ? Colors.white54
-        : Colors.black12;
-    
+    shadowColor = widget.shadowColor != null
+        ? widget.shadowColor
+        : Theme.of(context).brightness == Brightness.dark
+            ? Colors.white54
+            : Colors.black12;
+
     super.didChangeDependencies();
   }
 
@@ -134,7 +135,7 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
   void initState() {
     super.initState();
     _setSelected(widget.tabs[widget.initialSelection].key);
-    
+
     // add listener for page swipes
     if (this.widget.pageController != null) {
       _pageControllerListener =
@@ -163,9 +164,17 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
       children: <Widget>[
         Container(
           height: widget.barHeight,
-          decoration: BoxDecoration(color: barBackgroundColor, boxShadow: [
-            BoxShadow(color: shadowColor, offset: Offset(0, -1), blurRadius: widget.shadowBlur)
-          ]),
+          decoration: BoxDecoration(
+            color: barBackgroundColor,
+            boxShadow: [
+              BoxShadow(
+                color: shadowColor,
+                offset: Offset(0, -1),
+                blurRadius: widget.shadowBlur,
+              ),
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,19 +258,25 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
                           width: widget.circleHeight - 5,
                           child: Container(
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle, gradient: this.gradient, color: circleColor),
+                                shape: BoxShape.circle,
+                                gradient: this.gradient,
+                                color: circleColor),
                             child: Padding(
                               padding: const EdgeInsets.all(0.0),
                               child: AnimatedOpacity(
-                                duration:
-                                    Duration(milliseconds: widget.animDuration ~/ 5),
+                                duration: Duration(
+                                    milliseconds: widget.animDuration ~/ 5),
                                 opacity: _circleIconAlpha,
-                                child: activeIconWidget != null ? SizedBox(width: activeIconSize, height: activeIconSize, child: activeIconWidget)
-                                : Icon(
-                                  activeIcon,
-                                  color: activeIconColor,
-                                  size: activeIconSize,
-                                ),
+                                child: activeIconWidget != null
+                                    ? SizedBox(
+                                        width: activeIconSize,
+                                        height: activeIconSize,
+                                        child: activeIconWidget)
+                                    : Icon(
+                                        activeIcon,
+                                        color: activeIconColor,
+                                        size: activeIconSize,
+                                      ),
                               ),
                             ),
                           ),
@@ -286,7 +301,8 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
         activeIcon = nextIcon;
       });
     }).then((_) {
-      Future.delayed(Duration(milliseconds: (widget.animDuration ~/ 5 * 3)), () {
+      Future.delayed(Duration(milliseconds: (widget.animDuration ~/ 5 * 3)),
+          () {
         setState(() {
           _circleIconAlpha = 1;
         });
@@ -300,7 +316,7 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
     //_initAnimationAndStart(_circleAlignX, 1);
     if (widget.pageController != null) {
       widget.pageController.removeListener(_pageControllerListener);
-            var f = widget.pageController.animateToPage(page,
+      var f = widget.pageController.animateToPage(page,
           duration: Duration(milliseconds: kAnimDuration),
           curve: Curves.easeOut);
 
@@ -320,6 +336,7 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
       setState(() => currentSelected = page);
     }
   }
+
   void setPageOffset(double page) {
     print("$page");
     _setSelected(widget.tabs[page.round()].key);
@@ -331,7 +348,8 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
 }
 
 class TabData {
-  TabData({this.iconData, this.icon, @required this.title, this.onclick}) : assert(iconData != null || icon != null);
+  TabData({this.iconData, this.icon, @required this.title, this.onclick})
+      : assert(iconData != null || icon != null);
 
   IconData iconData;
   Widget icon;
