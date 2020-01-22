@@ -158,46 +158,52 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
       overflow: Overflow.visible,
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        Container(
-          height: widget.barHeight,
-          decoration: BoxDecoration(
-            color: barBackgroundColor,
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor,
-                offset: Offset(0, -1),
-                blurRadius: widget.shadowBlur,
-              ),
-            ],
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: widget.tabs
-                .map((t) => TabItem(
-                    uniqueKey: t.key,
-                    selected: t.key == widget.tabs[currentSelected].key,
-                    iconData: t.iconData,
-                    icon: t.icon,
-                    title: t.title,
-                    iconColor: inactiveIconColor,
-                    iconSize: inactiveIconSize,
-                    gradient: gradient,
-                    animDuration: widget.animDuration,
-                    titleStyle: themedTextStyle,
-                    callbackFunction: (uniqueKey) {
-                      int selected = widget.tabs
-                          .indexWhere((tabData) => tabData.key == uniqueKey);
-                      //widget.onTabChangedListener(selected);
-                      //_setSelected(uniqueKey);
-                      //_initAnimationAndStart(_circleAlignX, 1);
-                      setPage(selected);
-                    }))
-                .toList(),
+          child: Container(
+            height: widget.barHeight,
+            decoration: BoxDecoration(
+              color: barBackgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  color: shadowColor,
+                  offset: Offset(0, -1),
+                  blurRadius: widget.shadowBlur,
+                ),
+              ],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: widget.tabs
+                  .map((t) => TabItem(
+                      uniqueKey: t.key,
+                      selected: t.key == widget.tabs[currentSelected].key,
+                      iconData: t.iconData,
+                      icon: t.icon,
+                      title: t.title,
+                      iconColor: inactiveIconColor,
+                      iconSize: inactiveIconSize,
+                      gradient: gradient,
+                      animDuration: widget.animDuration,
+                      titleStyle: themedTextStyle,
+                      callbackFunction: (uniqueKey) {
+                        int selected = widget.tabs
+                            .indexWhere((tabData) => tabData.key == uniqueKey);
+                        //widget.onTabChangedListener(selected);
+                        //_setSelected(uniqueKey);
+                        //_initAnimationAndStart(_circleAlignX, 1);
+                        setPage(selected);
+                      }))
+                  .toList(),
+            ),
           ),
         ),
         Positioned.fill(
